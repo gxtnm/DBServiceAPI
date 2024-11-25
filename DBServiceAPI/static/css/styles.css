@@ -1,0 +1,450 @@
+/* styles.css */
+
+/* Reset default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.index-table {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.thead, .tbody {
+    display: table-header-group;
+}
+
+.tr {
+    display: table-row;
+}
+
+.th, .td {
+    display: table-cell;
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+}
+
+.th {
+    font-weight: bold;
+    background-color: #f2f2f2;
+}
+
+ /* CSS for the loading overlay */
+ #loading-overlay {
+    display: none;  /* Default hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: rgb(216, 127, 127);
+    text-align: center;
+    padding-top: 20%;
+    font-size: 1.5em;
+    z-index: 1000;
+}
+
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container for the main content */
+.container {
+    width: 99%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Heading styles */
+h1 {
+    text-align: center;
+    margin: 10px 0;
+}
+
+h4 {
+    margin: 0;    
+    text-align: center; /* Center the page name */
+    font-size: 1.2em; /* Adjust as needed for larger text */
+}.username {    
+    text-align: right; 
+    font-size: 0.9em; /* Half size for username */
+    color: rgb(104, 97, 97); /* Optional: Change color for visibility */
+}.logout {
+    color: red;
+}
+
+
+/* Form styles */
+body {
+    margin: 0;
+    background-color: hsl(0, 0%, 98%);
+    color: #333;
+    font-family: 'Noto Sans Georgian', Arial, sans-serif;
+    font: 100% / normal sans-serif;
+  }
+
+
+
+.container {
+    display: flex; /* Flexbox Layout */
+    justify-content: space-between; /* პირველი და ბოლო ელემენტი უკიდურესად მარცხნივ/მარჯვნივ */
+    align-items: center; /* ელემენტები ვერტიკალურად ცენტრში */
+    padding: 10px; /* კონტეინერის შიგნით სივრცე */
+    background-color: #f9f9f9; /* კონტეინერის ფონი */
+    border: 1px solid #ccc; /* კონტეინერის ჩარჩო */
+}
+
+.box {
+    background-color: lightblue; /* ელემენტის ფონი */
+    padding: 10px 20px; /* ელემენტის შიგნით სივრცე */
+    border: 1px solid #ccc; /* ელემენტის ჩარჩო */
+    text-align: center; /* ტექსტის ცენტრში განლაგება */
+    border-radius: 5px; /* მომრგვალებული კუთხეები */
+}
+
+.about {
+    font-family: Arial, sans-serif; /* შრიფტი */
+    font-size: 16px; /* ტექსტის ზომა */
+    line-height: 1.6; /* სტრიქონების სიმაღლე */
+    color: #333; /* ტექსტის ფერი */
+    background-color: #f9f9f9; /* ფონური ფერი */
+    border: 1px solid #ddd; /* საზღვარი */
+    border-radius: 5px; /* მომრგვალებული კუთხეები */
+    padding: 15px; /* შიგნითა სივრცე */
+    margin: 10px 0; /* გარეთა სივრცე */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* ჩრდილი */
+}
+  
+  main {
+    height: 98%; /* რათა გვერდი სრულად დაიკავოს */    
+    padding: 0 auto;
+    margin: 0 auto;
+    padding: 2rem 0;
+    width: 100%;
+    max-width: 10rem;
+  }
+  
+  form {
+    box-sizing: border-box;
+    padding: 0.1rem;
+    border-radius: 0.1rem;
+    background-color: hsl(0, 86%, 31%);
+    border: 0px solid hsl(258, 94%, 20%);
+    display: grid;
+    grid-template-columns: 1fr, 1fr;
+    gap: 0.1rem;
+    font-size: 0.7rem;  
+    font-weight: bold;   
+    flex-grow: 1;
+  }
+  
+  a {
+    color: #000000;           /* ტექსტის ფერი */
+    text-decoration: none;    /* წარწერის ქვედა ხაზის ამოღება */
+    font-size: 10px;   
+    font-weight: bold;       /* ტექსტის წვრილხაზო ფორმატში გაკეთება */
+    }
+
+  ul {
+    list-style-type: none;
+    text-decoration: none;
+    padding: 3px;
+    margin: 3px;
+    display: flex; /* ჰორიზონტალური განლაგებისთვის */
+    gap: 10px; /* ელემენტებს შორის სივრცე */
+    background-color: #f0f0f0; /* ღია ნაცრისფერი ფონი */
+    border: 1px solid #ccc; /* მსუბუქი საზღვარი */
+    border-radius: 5px; /* მომრგვალებული კიდეები */
+    color: black; /* შრიფტის ფერი */
+   }
+
+/* ქვემენიუები ვერტიკალური */
+ul ul {
+    display: none; /* სტანდარტულად დამალულია */
+    text-decoration: none;
+    position: absolute;
+    list-style-type: none;
+    padding: 1px;
+    margin: 1px;
+    background-color: #bbbec2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: rgb(248, 241, 241);
+    border: 0px solid;
+}
+
+ul li {
+    text-decoration: none;
+    position: relative;
+    border: 0px solid;
+    /*font-weight: bold;*/
+    min-width: 10px;
+    /*color: black;  შრიფტის ფერი */
+}
+
+/* ქვემენიუების ხილვადობა მშობელზე მაუსის მიტანისას */
+ul li:hover > ul {
+    display: block;
+}
+
+/* ქვემენიუს ელემენტები */
+ul ul li {
+    text-decoration: none;
+    display: block;
+    padding: 5px;
+    white-space: nowrap; /* ტექსტი ერთ ხაზზე დარჩეს */
+}
+
+ul ul li a {
+    text-decoration: none;
+    color: black;
+    /*font-weight: bold;*/
+}
+
+ul ul li a:hover {
+    text-decoration: none;
+    color: #000408; /* ჰოვერის ფერი */
+    background-color: #ccc;
+    font-weight: bold;
+}
+
+  .full-width {
+    grid-column: span 3;
+  }
+
+form {
+    background: #eff0f3;
+    padding: 5px;
+    border-radius: 1px;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+}
+
+form label {
+    display: block;
+    margin: 5px 0 3px;
+    font-weight: bold;
+}
+
+form select {
+    width: 960px;
+    padding: 1px;
+    margin-bottom: 1px;
+    border: 0.1px solid #09060c;
+    border-radius: 4px;
+    grid-template-columns: repeat(8, 1fr);
+    width: 120px;  /* Fixed width */    
+}
+.dashboard {    
+    width: 600px;
+    padding: 1px;
+    margin-bottom: 1px;
+    border: 0.1px solid #e2dcec;
+    border-radius: 4px;
+    display: grid; 
+    grid-template-columns: repeat(12, 1fr);
+    /*width: 300px;  /* Fixed width   
+    margin: 0 auto;  ელემენტის ჰორიზონტალური ცენტრში განთავსება */
+    /*margin-left: auto; /* ელემენტის მარჯვენა მხარეს გასანთლება */
+}
+
+/* Button styles */
+button, .href_button {
+    background-color: #a9ada9;
+    color: rgb(17, 1, 1);
+    padding: 4px 8px;
+    margin: 3px;
+    border: 0.1px solid #09060c;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 70px;
+    height: 25px;
+    display: inline-flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    font-size: 14px;
+    text-decoration: none; /* Remove underline for links */
+    text-align: center; /* Ensure text alignment */
+    font-weight: bold; /* Make text bold */
+}
+
+button:hover, .href_button:hover {
+    background-color: #0056b3;
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+button.check-btn {
+    background-color: #f0f0f0; /* Default color */
+    border: 1px solid #df0f0f;
+    color: black; /* Text color */
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+
+
+/* ცხრილის ძირითადი სტილი */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+
+
+
+/* ცხრილის სათაურები */
+.th {
+    max-width: 80px; /* სვეტის მაქსიმალური სიგანე */
+    background-color: #949694; /* მწვანე ფონი */
+    color: rgb(14, 13, 13);
+    text-align: left;
+    padding: 2px 5px;
+   
+}
+
+/* ცხრილის რიგები */
+.td {
+    white-space: normal; /* ტექსტი რამდენიმე ხაზზე გადაინაცვლებს, საჭიროებისამებრ */
+    word-wrap: break-word; /* სიტყვები გაწყდება კონტეინერში */
+    padding: 2px 5px; /* შიგა სივრცე */
+    font-family: Arial, sans-serif; /* შრიფტი */
+    max-width: 80px;
+  }
+
+
+/* ცხრილის ჩარჩო */
+table, th {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+}
+
+
+
+
+/* მობილურ მოწყობილობებზე სიგრძე */
+@media screen and (max-width: 600px) {
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+    th, td {
+        padding: 8px;
+    }
+}
+
+
+/* Responsive table adjustments */
+@media (max-width: 600px) {
+    table th, table td {
+        font-size: 1.8rem;
+        padding: 10px;
+    }
+}
+
+/* Smooth scrolling for better user experience */
+html {
+    scroll-behavior: smooth;
+}
+
+.filter-container {
+    display: grid;                          /* Use grid layout */
+    grid-template-columns: repeat(10, 1fr); /* Create three equal columns */
+    gap: 2px;                              /* Space between grid items */
+    margin-bottom: 2px;  
+    width: 50%;                  /* Space below the filter section */
+}
+
+.filter-item {
+    padding: 3px;                         /* Adds padding inside items */
+    background: #f9f9f9;                   /* Background color for items */
+    border-radius: 5px;                    /* Rounded corners */
+    text-align: center;                     /* Centers text inside items */
+}
+
+.filter-item label {
+    font-weight: bold;
+}
+
+.filter-item input[type="date"] {
+    padding: 1px;   
+    margin-right: 1px; /* ველებს შორის სივრცე */
+    border-radius: 1px; 
+    padding: 1px;
+    font-size: 1em;
+}
+
+
+.pagination {
+    display: flex; /* ელემენტები გვერდზე გადაისვავს */
+    justify-content: center; /* ცენტრში განლაგება */
+    margin: 10px 0; /* ზედა და ქვედა მარგინები */
+}
+
+.pagination a {
+    padding: 5px 8px; /* შიდა საზღვრების დამატება */
+    margin: 0 5px; /* მარჯვენა და მარცხენა მარგინები */
+    background-color: #6a8db3; /* ფონდის ფერი */
+    color: white; /* ტექსტის ფერი */
+    text-decoration: none; /* ხაზის მოხაზვა */
+    border-radius: 5px; /* რბილი კუთხეები */
+    transition: background-color 0.3s; /* ფონდის ფერის გარდაქმნა */
+}
+
+.pagination a:hover {
+    background-color: #0056b3; /* ხვედრითი ფერი */
+}
+
+/* gamoviyenoT კლასი + single_update კლასი */
+.gamoviyenoT.single_update {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* მხოლოდ single_update კლასისთვის მოცემული სტილი */
+.single_update input[type="text"] {
+    border: 2px solid #f2f5f1;
+    background-color: #e8f1ff;
+    font-weight: bold;
+    width: 500px;  /* Use width instead of size */
+}
+
+.single_update button {
+    background-color: #2e2f30;
+    border-radius: 8px;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.single_update h3 {
+    color: #e74c3c;
+    font-size: 18px;
+}
+
+.single_update input[readonly] {
+    background-color: #ada2a2;
+    cursor: not-allowed;
+}
+
+
+

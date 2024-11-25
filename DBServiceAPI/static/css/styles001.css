@@ -1,0 +1,236 @@
+/* styles.css */
+
+/* Reset default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ /* CSS for the loading overlay */
+ #loading-overlay {
+    display: none;  /* Default hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: rgb(216, 127, 127);
+    text-align: center;
+    padding-top: 20%;
+    font-size: 1.5em;
+    z-index: 1000;
+}
+
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container for the main content */
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Heading styles */
+h1 {
+    text-align: center;
+    margin: 10px 0;
+}
+
+h4 {
+    margin: 0;    
+    text-align: center; /* Center the page name */
+    font-size: 1.2em; /* Adjust as needed for larger text */
+}.username {    
+    text-align: right; 
+    font-size: 0.7em; /* Half size for username */
+    color: gray; /* Optional: Change color for visibility */
+}.logout {
+    color: red;
+}
+
+/* Form styles */
+body {
+    margin: 0;
+    background-color: hsl(0, 0%, 98%);
+    color: #333;
+    font: 100% / normal sans-serif;
+  }
+  
+  main {
+    height: 100%; /* რათა გვერდი სრულად დაიკავოს */    
+    padding: 0 auto;
+    margin: 0 auto;
+    padding: 2rem 0;
+    width: 100%;
+    max-width: 10rem;
+  }
+  
+  form {
+    box-sizing: border-box;
+    padding: 0.1rem;
+    border-radius: 0.1rem;
+    background-color: hsl(0, 86%, 31%);
+    border: 0px solid hsl(258, 94%, 20%);
+    display: grid;
+    grid-template-columns: 1fr, 1fr;
+    gap: 0.1rem;
+    font-size: 0.7rem;  
+    font-weight: bold;   
+    flex-grow: 1;
+  }
+
+  
+  
+  .full-width {
+    grid-column: span 3;
+  }
+
+form {
+    background: #fff;
+    padding: 5px;
+    border-radius: 1px;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+}
+
+form label {
+    display: block;
+    margin: 5px 0 3px;
+    font-weight: bold;
+}
+
+form select {
+    width: 95%;
+    padding: 1px;
+    margin-bottom: 1px;
+    border: 0.1px solid #09060c;
+    border-radius: 4px;
+    grid-template-columns: repeat(8, 1fr);
+    width: 120px;  /* Fixed width */    
+}
+.dashboard {    
+    width: 95%;
+    padding: 1px;
+    margin-bottom: 1px;
+    border: 0.1px solid #e2dcec;
+    border-radius: 4px;
+    grid-template-columns: repeat(8, 1fr);
+    width: 300px;  /* Fixed width   
+    margin: 0 auto;  ელემენტის ჰორიზონტალური ცენტრში განთავსება */
+    margin-left: auto; /* ელემენტის მარჯვენა მხარეს გასანთლება */
+}
+
+/* Button styles */
+button {
+    background-color: #5cb85c;
+    color: rgb(17, 1, 1);
+    padding: 1px 1px;
+    border: 0.1px solid #09060c;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 70px;  /* Fixed width */    
+}
+
+button.check-btn {
+    background-color: #f0f0f0; /* Default color */
+    border: 1px solid #df0f0f;
+    color: black; /* Text color */
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+
+
+/* Table styles */
+table {
+    width: 98%;
+    margin: 2px auto;
+    border-collapse: collapse;
+    font-size: 0.7rem;  
+    font-weight: bold;   
+}
+
+table th, table td {
+    padding: 5px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsive table adjustments */
+@media (max-width: 600px) {
+    table th, table td {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+}
+
+/* Smooth scrolling for better user experience */
+html {
+    scroll-behavior: smooth;
+}
+
+.filter-container {
+    display: grid;                          /* Use grid layout */
+    grid-template-columns: repeat(9, 1fr); /* Create three equal columns */
+    gap: 2px;                              /* Space between grid items */
+    margin-bottom: 2px;                    /* Space below the filter section */
+}
+
+.filter-item {
+    padding: 3px;                         /* Adds padding inside items */
+    background: #f9f9f9;                   /* Background color for items */
+    border-radius: 5px;                    /* Rounded corners */
+    text-align: center;                     /* Centers text inside items */
+}
+
+.filter-item label {
+    font-weight: bold;
+}
+
+
+.pagination {
+    display: flex; /* ელემენტები გვერდზე გადაისვავს */
+    justify-content: center; /* ცენტრში განლაგება */
+    margin: 10px 0; /* ზედა და ქვედა მარგინები */
+}
+
+.pagination a {
+    padding: 5px 8px; /* შიდა საზღვრების დამატება */
+    margin: 0 5px; /* მარჯვენა და მარცხენა მარგინები */
+    background-color: #6a8db3; /* ფონდის ფერი */
+    color: white; /* ტექსტის ფერი */
+    text-decoration: none; /* ხაზის მოხაზვა */
+    border-radius: 5px; /* რბილი კუთხეები */
+    transition: background-color 0.3s; /* ფონდის ფერის გარდაქმნა */
+}
+
+.pagination a:hover {
+    background-color: #0056b3; /* ხვედრითი ფერი */
+}
+

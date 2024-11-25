@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Upload Excel File</title>
+  </head>
+  <body>
+    <h1>Select and Upload Excel File</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".xlsx, .xls">
+      <input type="submit" value="Upload">
+    </form>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'head.html' %}   
+    <body>  
+    <!-- Make sure to move everything inside the form -->
+    <form id="FormManageView" method="POST" action="/ManageView">
+        {% if column_names %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        {% for column in column_names %}
+                            <th>{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if rows %}
+                        {% for row in rows %}  
+                        {% set k = loop.index %}
+                            <tr>                                
+                                {% for item in row %}                                
+                                    <!-- For FEATURE_ID and FILTER_FLAG, use input fields for editing -->
+                                    {% if item == 'FEATURE_ID' %}
+                                        <td>
+                                            <input type="number" name="FEATURE_ID_{{ k }}"  value="{{ row[item] }}">
+                                        </td>
+                                    {% elif item == 'ORDERING' %}
+                                        <td>
+                                            <input type="number" name="ORDERING_{{ k }}"  value="{{ row[item] }}">
+                                        </td>
+                                    {% elif item == 'VIEW_FLAG' %}
+                                        <td>
+                                            <input type="checkbox" name="VIEW_FLAG_{{ k }}" {% if row[item] == 1 %}checked{% endif %}>
+                                        </td>                    
+                                    {% elif item == 'FILTER_FLAG' %}
+                                        <td>
+                                            <input type="checkbox" name="FILTER_FLAG_{{ k }}" {% if row[item] == 1 %}checked{% endif %}>
+                                        </td>
+                                    {% elif item == 'SAMPLE_LIST_JSON' %}
+                                        <td>
+                                            <textarea name="SAMPLE_LIST_JSON_{{ k }}"  disabled = "true" rows="4" cols="50">{{ row[item] }}</textarea>
+                                        </td>
+                                    {% elif item == 'COLUMN_UNIQ_ID' %}
+                                        <td>
+                                            <input type="text"  name="COLUMN_UNIQ_ID_{{ k }}" value="{{ row[item] }}">
+                                        </td>
+                                    {% elif item == 'COLUMN_ALIAS' %}
+                                        <td>
+                                            <input type="text"  name="COLUMN_ALIAS_{{ k }}" value="{{ row[item] }}">
+                                        </td>
+                                    {% elif item == 'CONSTRAINT_TYPE' %}
+                                        <td>
+                                            <input type="text"  name="CONSTRAINT_TYPE_{{ k }}" value="{{ row[item] }}">
+                                        </td>
+                                    {% else %}
+                                        <td>{{ row[item]|safe }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+            <br/> 
+            <!-- Save button -->
+            ....<button type="submit">Save</button>
+        {% else %}
+            <h3>არჩეული კრიტერიუმით ჩანაწერი ვერ მოიძენა.</h3>
+        {% endif %}
+    </form> 
+</body>
+</html>

@@ -1,0 +1,17 @@
+[AuthService]
+base_url = https://oauth2.exaplecom.ge/auth/
+[Oracle]
+username = example_user
+password = example_pass
+host = exaple_host
+port = 1521
+service_name = example_srv
+[VIEWS]
+VIEW_0 = example.view_0
+VIEW_1 = example.view_1 
+VIEW_2 = example.view_2
+
+[permissions]
+permissions_v_0 = ['PLANNER_ADMIN','PLANNER_EDIT']
+permissions_v_1 = ['PLANNER_ADMIN','PLANNER_EDIT']
+permissions_v_2 = ['PLANNER_ADMIN','PLANNER_EDIT']

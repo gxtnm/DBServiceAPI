@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'head.html' %}  
+    <body>  
+        <form  id="filterForm"  method="POST" action="/">
+            <div class="filter-container">
+            {% for field in filter_fields %}  
+            <div class="filter-item">    
+                <label id="{{ field }}">{{ field }}</label>
+                {% if filter_values[field]  and  field not in dt_fields  %}
+                    <select id="{{ field }}" onchange="click_submit()" name="{{ field }}">
+                        <option value="" {% if  filter_params.get(field)  == "" %} selected {% endif %}>ყველა</option>
+                        {% for value in filter_values[field] %}
+                            <option value="{{ value }}" {% if  filter_params.get(field) | string == value | string %} selected {% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                {% elif field in dt_fields %} {# თუ ველი არის დროითი #}
+                <!-- როცა filter_values ცარიელია, გამოვიყენოთ input -->                
+                <input type="date" id="{{ field }}" name="{{ field }}" onchange="click_submit()" 
+                       value="{{ filter_params.get(field,current_date) }}">  
+                {% else %}
+                    <input type="text" onkeyup="click_submit()" id="{{ field }}" autocomplete="on" name="{{ field }}" value="{{ filter_params.get(field) }}" />
+            {% endif %}
+            </div>  
+            {% endfor %}         
+            </div>
+            <br/>
+            <div class="pagination">
+                {% set total_pages = (total // per_page) + 1 %}
+                {% set r_pages = ((total_pages + page)//2) | round | int %}
+                {% set l_pages = (page//2) | round | int  %}
+                {% for p in range(1, total_pages + 1) %}
+                    {% if ((p <= 5) or (p > total_pages - 5) or (offset//per_page - p < 5 and p - offset//per_page < 5)) and page!= p %}                      
+                        <button type="submit" name="page" value={{ p }} >{{ p }}</button>
+                    {% else %}
+                        {% if p == page and (p < total_pages or p == 1) %}    
+                        <button type="submit" name="page" onclick="fetchFormData('filterForm')" value={{ p }} style="background: none; text-emphasis-color: black;" ><b>refresh</b></button>
+                        {% endif %}
+                        {% if p == r_pages  and p < total_pages  %}            
+                        <button type="submit" name="page" value={{ r_pages }} >.....</button>
+                        {% endif %}
+                        {% if p == l_pages and p < total_pages %}
+                        <button type="submit" name="page" value={{ l_pages }} >.....</button>            
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}                
+            </div>
+            <div class = "total"> ჩანაწერების რაოდენობა : {{ total }} ... ({{view_table}})</div>    
+            <br/>
+{% if column_names %}
+<div class="index-table">
+    <div class="thead">
+        <div class="tr">
+            {% for column in columns_alias %}
+                <div class="th">{{ column }}</div>
+            {% endfor %}
+        </div>
+    </div>    
+    <div class="tbody">
+        {% if rows %}
+            {% for row in rows %}
+                <div class='tr'  ondblclick='sendRowDataAndRedirect(this)' id ='tr_{{row["ID"]|safe}}' data-row='{{ row | tojson }}'>
+                    {% for item in row %}
+                        <div class="td"  ondblclick="stopPropagation(event)" id = '{{item}}'>{{ row[item]|safe }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+    {% else %}
+    <h3>არჩეული კრიტერიუმით ჩანაწერი ვერ მოიძენა.</h3>
+{% endif %}
+</form>
+{% if total < 200001 %} 
+<form id="downloadForm" method="POST" action="/download">
+    <input type="hidden" name="query" value="{{ query }}">
+    <button type="submit">Excel</button>
+</form>
+<div class="pagination"><a id="GetDateJsonButton" href="/GetData?table={{view_table}}{{api_filter_values}}&off_set={{offset}}&per_page={{per_page}}" blanck_>Api.GetJson</a> </div>
+{% endif %}
+<br/>
+<script>
+
+history.pushState(null, '', window.location.href);
+
+window.addEventListener('popstate', (event) => {
+  history.pushState(null, '', window.location.href);
+  alert('Back navigation is disabled!');
+});
+
+function redirectWithPost(data, targetUrl) {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = targetUrl;
+
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            const hiddenField = document.createElement("input");
+            hiddenField.type = "hidden";
+            hiddenField.name = key;
+            hiddenField.value = data[key];
+            form.appendChild(hiddenField);
+        }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+    }
+
+    function sendRowDataAndRedirect(rowElement) {
+        const rowData = JSON.parse(rowElement.getAttribute("data-row"));
+        const targetUrl = "/"; // ამ გვერდზე მოხდება გადამისამართება
+        redirectWithPost(rowData, targetUrl);
+    }
+    
+    function sendRowData(rowElement) {
+        console.log('Double-click detected!');
+    // JSON ფორმატში მონაცემების მიღება
+    const rowData = JSON.parse(rowElement.getAttribute("data-row"));
+    // POST მოთხოვნის გაგზავნა
+    fetch('/singlrowview', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(rowData),
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Data submitted successfully:', rowData);
+                alert('მონაცემები წარმატებით გაიგზავნა!');
+            } else {
+                console.log('Submission failed.');
+                alert('მონაცემების გაგზავნა ვერ მოხერხდა.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function formatDateTimeForAll(divClass) {
+        const divs = document.querySelectorAll(divClass);
+
+        divs.forEach(div => {  
+
+                const originalDateTime = div.textContent.trim();
+                const datePart = originalDateTime.split(" ")[0];
+                const timePart = originalDateTime.split(" ")[1];
+
+                if (timePart) {
+                    const time = timePart.split(":");
+                    const formattedTime = `${time[0]}:${time[1]}`;
+
+                    if(!formattedTime.toLowerCase().includes("undefined")&&!originalDateTime.toLowerCase().includes("ა"))
+                    div.textContent = `${datePart} ${formattedTime}`;
+                }
+            
+           
+        });
+    }
+
+    window.addEventListener('beforeunload', function () {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    loadingOverlay.style.display = 'block';
+    });
+
+    // Apply the function to all divs with class "td"
+    formatDateTimeForAll('.td');    
+
+    function sendPost() {
+    const query = "{{ query }}"; // ჩაანაცვლეთ საჭირო მნიშვნელობით
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/download';
+
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'query';
+    input.value = query;
+
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    }
+    // სკრიპტი getElementById('filterForm')  
+    // div class="filter-item"><button type="button" id="buttonSubmit">refresh</button></div>  
+    //<div class="filter-item"><button type="button" id="clearFilters">Clear</button></div>       
+    //<div class="filter-item"><button type="button" id="buttonUpload">Upload</button></div>    
+    //                   querySelectorAll('select')
+    // Function to set default date to 60 days before today for all date inputs
+    function setDefaultDateForAll() {
+    // Get today's date
+    const today = new Date();
+    today.setDate(today.getDate());
+    const yearsago = new Date(); 
+    yearsago.setDate(yearsago.getDate()-30);    
+    
+    const formattedtoday = today.toISOString().split('T')[0];
+    const formattedyearsago = yearsago.toISOString().split('T')[0];
+
+    // Find all date inputs and set their value
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            if  (input.name.includes("_to") && !input.value) { 
+                    input.value = formattedtoday;
+                }
+            if  (input.name.includes("_from") && !input.value) {
+                    input.value = formattedyearsago;
+                }
+        });
+    }
+
+  // Call the function on page load
+    window.onload = setDefaultDateForAll();
+    window.onload = setInterval(click_submit, 60000); 
+
+    let isDownloading = false;    
+    
+
+   
+    $(document).ready(function() {
+        $('filterForm').on('submit', function(event) {
+            event.preventDefault();
+            let formData = {
+                //name: $('#name').val(),
+                //age: $('#age').val()
+            };
+            $.ajax({
+                url: '/process_data',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    $('#response').html(response.message);
+                },
+                error: function(error) {
+                    $('#response').html('Error submitting form.');
+                }
+            });
+        });
+    });
+
+   
+
+function click_submit() {
+    if (!isDownloading) {
+        document.getElementById("filterForm").submit(); // ფორმის ავტომატური გაგზავნა
+    }   
+  }
+
+
+  function startDownload() {
+    isDownloading = true;
+    setInterval(click_submit, 6000); 
+    // ჩამოტვირთვის პროცესი იწყება
+    // როცა ჩამოტვირთვა დასრულდება:
+    setTimeout(() => { // მაგალითისთვის
+      isDownloading = false;
+    }, 5000); // ჩამოტვირთვის დასრულების შემდეგ
+  }
+
+  document.getElementById("downloadButton").addEventListener("click", startDownload);
+
+  
+
+document.getElementById("dashboardForm").addEventListener("submit", function() {
+        // კონტენტის დამალვა ან გასუფთავება
+        document.getElementById("dashboardForm").style.display = "none";
+        document.getElementById("filterForm").style.display = "none";
+});  
+
+document.querySelectorAll('form').forEach(form => {
+    form.querySelectorAll('select').forEach(select => {
+        select.addEventListener('change', function() {
+            // თუ ფორმის ID არ არის 'dashboardForm', გააგზავნე
+            if (form.id !== 'dashboardForm0') {
+                form.submit();  // ფორმის გაგზავნა
+                fetchFormData(form);
+            }
+        });
+    });
+});
+
+  
+
+
+document.getElementById('clearFilters').onclick = function() {
+        const form = document.getElementById('filterForm');
+        const actionUrl = form.action; // ფორმის action URL
+        window.location.href = actionUrl; // გადაყვანა ახალ URL-ზე
+};
+
+document.getElementById('buttonUpload').onclick = function() {
+        const form = document.getElementById('filterForm');
+        const actionUrl = form.action; // ფორმის action URL
+        window.location.href = actionUrl+'upload'; // გადაყვანა ახალ URL-ზე
+};
+
+    
+function fetchFormData(form) {
+      // აჩვენეთ დატვირთვის overlay
+      document.getElementById("loading-overlay").style.display = "block";
+
+      const formData = new FormData(form);  // ავტომატურად იღებს ფორმის მონაცემებს
+      const data = Object.fromEntries(formData.entries());  // JSON ობიექტში გარდაქმნა
+
+      // მიმდინარე URL-ის გამოყენება
+      const currentUrl = window.location.pathname;
+
+      const url = form.action;
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);  // მიღებული მონაცემების გამოტანა
+      })
+      .catch(error => {
+        console.error("დაფიქსირდა შეცდომა:", error);
+      })
+      .finally(() => {
+        document.getElementById("loading-overlay").style.display = "none";
+      });
+}
+
+
+    
+</script>
+    </script>
+</body>
+</html>

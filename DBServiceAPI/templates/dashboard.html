@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'head.html' %}
+<body>   
+    <form method="POST">
+        <label for="view">Searche View:</label>
+        <select class="dashboard" name="view_table" id="view" action="/dashboard">
+            {% for vw in view %}
+                <option value="{{ vw }}">{{ vw }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Select</button>
+    </form>
+
+    {% if talbe_view %}
+        <h2>You selected: {{ talbe_view }}</h2>
+    {% endif %}
+</body>
+</html>
